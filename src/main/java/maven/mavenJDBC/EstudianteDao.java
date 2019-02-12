@@ -9,17 +9,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.attribute.standard.RequestingUserName;
-
-
 
 public class EstudianteDao {
-		
+	// creo dependencia a la Clase que hará la conexción
+	private ConnectionManager connectionManager;
+				
+	public EstudianteDao(ConnectionManager connectionManager) {
+		super();
+		this.connectionManager = connectionManager;
+	}
+
+
 	public int grabar(Estudiante estudiante) throws SQLException {
 		
 		String sql = "insert into estudiante (nombre, apellido, padron) values (? , ? , ?)";		
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mavenjdbc", "root", "");
-		PreparedStatement statement = connection.prepareStatement(sql);
+		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
 		statement.setString(1, estudiante.getNombre());
 		statement.setString(2, estudiante.getApellido());
 		statement.setString(3, estudiante.getPadron());
@@ -32,8 +36,7 @@ public class EstudianteDao {
 	public Estudiante grabar2(Estudiante estudiante) throws SQLException {
 		
 		String sql = "insert into estudiante (nombre, apellido, padron) values (? , ? , ?)";
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mavenjdbc", "root", "");
-		PreparedStatement statement = connection.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
 		statement.setString(1, estudiante.getNombre());
 		statement.setString(2, estudiante.getApellido());
 		statement.setString(3, estudiante.getPadron());
@@ -48,9 +51,8 @@ public class EstudianteDao {
 	}
 	
 	public void actualizar (Estudiante estudiante) throws SQLException{
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mavenjdbc", "root", "");
 		String sql = "update estudiante set nombre = ?, apellido = ?, padron = ? where id =?";
-		PreparedStatement statement = connection.prepareStatement(sql);
+		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
 		statement.setString(1, estudiante.getNombre());;
 		statement.setString(2, estudiante.getApellido());
 		statement.setString(3, estudiante.getPadron());
@@ -59,9 +61,8 @@ public class EstudianteDao {
 	}
 	
 	public void borrar (int id)throws SQLException{
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mavenjdbc", "root", "");
 		String sql = "delete from estudiante where id =?";
-		PreparedStatement statement = connection.prepareStatement(sql);
+		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
 		statement.setInt(1, id);
 		statement.executeUpdate();
 	}
@@ -69,8 +70,7 @@ public class EstudianteDao {
 	public List<Estudiante> select() throws SQLException{
 		
 		String sql = "Select * from estudiante";		
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mavenjdbc", "root", "");
-		Statement statement = connection.createStatement();		
+		Statement statement = connectionManager.conectarse().createStatement();		
 		ResultSet resultSet = statement.executeQuery(sql);
 		
 		List<Estudiante> estudiantes = new ArrayList<Estudiante>();
@@ -85,8 +85,7 @@ public class EstudianteDao {
 	public Estudiante obtenerPorId(int id) throws SQLException{
 		
 		String sql = "Select * from estudiante where id = ?";		
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mavenjdbc", "root", "");
-		PreparedStatement statement = connection.prepareStatement(sql);
+		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
 		statement.setInt(1, id);
 		ResultSet resultSet = statement.executeQuery();
 		

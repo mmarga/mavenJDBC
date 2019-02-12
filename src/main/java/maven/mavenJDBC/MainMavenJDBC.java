@@ -5,9 +5,9 @@ import java.sql.SQLException;
 public class MainMavenJDBC {
 
 	public static void main(String[] args) throws SQLException {
-		
-		EstudianteDao estudianteDao = new EstudianteDao();
-		System.out.println(estudianteDao.select()); 
+		ConnectionManager connectionManager = new ConnectionManager();
+		EstudianteDao estudianteDao = new EstudianteDao(connectionManager);
+		//System.out.println(estudianteDao.select()); 
 		/*
 		Estudiante estudiante = new Estudiante();
 		estudiante.setNombre("Pedro");
@@ -42,6 +42,9 @@ public class MainMavenJDBC {
 		//Estudiante estudiante4 = new Estudiante("Benito", "Musso", "Duce");
 		//estudianteDao2.grabarConId(estudiante4);
 		
+		Estudiante estudiante6 = new Estudiante("Sabrina", "Cocuso", "enano");
+		estudianteDao.grabar(estudiante6);
+		System.out.println(estudianteDao.select());		
 	
 		
 	}
