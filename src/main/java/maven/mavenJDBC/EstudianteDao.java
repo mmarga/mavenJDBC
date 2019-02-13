@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EstudianteDao {
+public class EstudianteDao implements Dao<Estudiante> {
 	// creo dependencia a la Clase que hará la conexción
 	private ConnectionManager connectionManager;
 				
@@ -18,22 +18,8 @@ public class EstudianteDao {
 		super();
 		this.connectionManager = connectionManager;
 	}
-
-
-	public int grabar(Estudiante estudiante) throws SQLException {
 		
-		String sql = "insert into estudiante (nombre, apellido, padron) values (? , ? , ?)";		
-		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
-		statement.setString(1, estudiante.getNombre());
-		statement.setString(2, estudiante.getApellido());
-		statement.setString(3, estudiante.getPadron());
-		int rows = statement.executeUpdate();
-		System.out.println("Registros ingresasdos: " + rows + "correspondientes a: " + estudiante );
-		return rows;
-	}
-	
-	
-	public Estudiante grabar2(Estudiante estudiante) throws SQLException {
+	public Estudiante grabar(Estudiante estudiante) throws SQLException {
 		
 		String sql = "insert into estudiante (nombre, apellido, padron) values (? , ? , ?)";
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
@@ -51,7 +37,7 @@ public class EstudianteDao {
 	}
 	
 	public void actualizar (Estudiante estudiante) throws SQLException{
-		String sql = "update estudiante set nombre = ?, apellido = ?, padron = ? where id =?";
+		String sql = "update estudiante set nombre = ?, apellido = ?, padron = ? where id_estudiante =?";
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
 		statement.setString(1, estudiante.getNombre());;
 		statement.setString(2, estudiante.getApellido());
@@ -60,14 +46,14 @@ public class EstudianteDao {
 		statement.executeUpdate();
 	}
 	
-	public void borrar (int id)throws SQLException{
-		String sql = "delete from estudiante where id =?";
+	public void borrar (Integer id)throws SQLException{
+		String sql = "delete from estudiante where id_estudiante =?";
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
 		statement.setInt(1, id);
 		statement.executeUpdate();
 	}
 	
-	public List<Estudiante> select() throws SQLException{
+	public List<Estudiante> obtenerTodos() throws SQLException{
 		
 		String sql = "Select * from estudiante";		
 		Statement statement = connectionManager.conectarse().createStatement();		
@@ -81,8 +67,8 @@ public class EstudianteDao {
 		
 		return estudiantes;
 	}
-
-	public Estudiante obtenerPorId(int id) throws SQLException{
+ 
+	public Estudiante obtenerPorId(Integer id) throws SQLException{
 		
 		String sql = "Select * from estudiante where id = ?";		
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);

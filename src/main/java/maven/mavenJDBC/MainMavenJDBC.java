@@ -42,10 +42,24 @@ public class MainMavenJDBC {
 		//Estudiante estudiante4 = new Estudiante("Benito", "Musso", "Duce");
 		//estudianteDao2.grabarConId(estudiante4);
 		
-		Estudiante estudiante6 = new Estudiante("Sabrina", "Cocuso", "enano");
-		estudianteDao.grabar(estudiante6);
+		/*Estudiante estudiante6 = new Estudiante("Roberto", "Cocuso", "enano");
+		estudiante6.setId_estudiante(11);
+		estudianteDao.actualizar(estudiante6);
 		System.out.println(estudianteDao.select());		
-	
+	*/
+		
+	/*	Estudiante estudiante7 = new Estudiante("Roberto", "Galan", "Viejo forro");
+		estudiante7.setId_estudiante(11);
+		estudianteDao.borrar(11);	
+		
+	*/
+		Materia materia = new Materia(1, "Matematica", 35);
+		MateriaDao materiaDao = new MateriaDao(connectionManager);
+		
+		materiaDao.grabar(materia);
+		
+		
+		
 		
 	}
 
