@@ -30,7 +30,7 @@ public class EstudianteDao implements Dao<Estudiante> {
 		
 		ResultSet keys = statement.getGeneratedKeys(); //aquí consulto el id que le asignó la Base de Datos
 		while (keys.next()) {
-			estudiante.setId_estudiante(keys.getInt(1));			
+			estudiante.setId(keys.getInt(1));			
 		}
 		System.out.println("El nuevo estudiante se ingresó con los siguientes datos:" + estudiante );
 		return estudiante;
@@ -42,7 +42,7 @@ public class EstudianteDao implements Dao<Estudiante> {
 		statement.setString(1, estudiante.getNombre());;
 		statement.setString(2, estudiante.getApellido());
 		statement.setString(3, estudiante.getPadron());
-		statement.setInt(4, estudiante.getId_estudiante());
+		statement.setInt(4, estudiante.getId());
 		statement.executeUpdate();
 	}
 	
@@ -88,7 +88,7 @@ public class EstudianteDao implements Dao<Estudiante> {
 	
 	private Estudiante construir(ResultSet resultSet) throws SQLException {
 		Estudiante estudiante = new Estudiante();
-		estudiante.setId_estudiante(resultSet.getInt(1));
+		estudiante.setId(resultSet.getInt(1));
 		estudiante.setNombre(resultSet.getString(2));
 		estudiante.setApellido(resultSet.getString(3));
 		estudiante.setPadron(resultSet.getString(4));

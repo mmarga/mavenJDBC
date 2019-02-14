@@ -53,11 +53,14 @@ public class MainMavenJDBC {
 		estudianteDao.borrar(11);	
 		
 	*/
-		Materia materia = new Materia(1, "Matematica", 35);
+	/*	Materia materia = new Materia(2, "Litera", 30);
 		MateriaDao materiaDao = new MateriaDao(connectionManager);
 		
-		materiaDao.grabar(materia);
-		
+		materiaDao.borrar(2);
+	*/
+		CarreraDao carreraDao = new CarreraDao(connectionManager);
+		Carrera carrera = new Carrera(1 , "Abogacía");
+		carreraDao.grabar(carrera);
 		
 		
 		

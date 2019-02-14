@@ -2,12 +2,11 @@ package maven.mavenJDBC;
 
 import java.sql.SQLException;
 
-public class Estudiante {
+public class Estudiante extends Entidad {
 
 	private String nombre;
 	private String apellido;
 	private String padron;
-	private int id_estudiante;
 	public String getNombre() {
 		return nombre;
 	}
@@ -26,19 +25,8 @@ public class Estudiante {
 	public void setPadron(String padron) {
 		this.padron = padron;
 	}
-	public int getId_estudiante() {
-		return id_estudiante;
-	}
-	public void setId_estudiante(int id_estudiante) {
-		this.id_estudiante = id_estudiante;
-	}
-	@Override
-	public String toString() {
-		
-		return  "\nEstudiante [nombre=" + nombre + ", apellido=" + apellido + ", padron=" + padron + ", id_estudiante="
-				+ id_estudiante + "]";
-		
-	}
+	
+	
 	public Estudiante() {
 		
 	}
