@@ -58,12 +58,18 @@ public class MainMavenJDBC {
 		
 		materiaDao.borrar(2);
 	*/
-		CarreraDao carreraDao = new CarreraDao(connectionManager);
+	/*	CarreraDao carreraDao = new CarreraDao(connectionManager);
 		Carrera carrera = new Carrera(1 , "Abogacía");
 		carreraDao.grabar(carrera);
+	*/	
+	/*	Materia materia = new Materia(3, "Estadística", 10);
+		MateriaDao materiaDao = new MateriaDao(connectionManager);
+		materiaDao.grabar(materia);		
+	*/
 		
-		
-		
+		Estudiante estudiante = new Estudiante("Juan", "Carlos", "Rey de España");
+		EstudianteDao estudianteDao2 = new EstudianteDao(connectionManager);
+		estudianteDao.grabar(estudiante); 
 	}
 
 }
