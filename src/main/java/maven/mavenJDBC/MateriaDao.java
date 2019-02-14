@@ -31,6 +31,21 @@ public class MateriaDao extends DaoSupport<Materia>{
 		parameters.put(2, entidad.getCargaHoraria());
 		return parameters;
 	}
+
+	@Override
+	protected String tableName() {
+		
+		return "materia";
+	}
+
+	@Override
+	protected Materia createEntity(ResultSet resultSet) throws SQLException {
+		Materia materia = new Materia();
+		materia.setId(resultSet.getInt(1));
+		materia.setNombre(resultSet.getString(2));
+		materia.setCargaHoraria(resultSet.getInt(3));
+		return materia;
+	}
 	
 
 }

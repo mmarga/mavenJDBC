@@ -34,6 +34,21 @@ public class EstudianteDao extends DaoSupport<Estudiante> {
 		parameters.put(3, entidad.getPadron());
 		return parameters;
 	}
+
+	@Override
+	protected String tableName() {
+		return "estudiante";
+	}
+
+	@Override
+	protected Estudiante createEntity(ResultSet resultSet) throws SQLException {
+		Estudiante estudiante = new Estudiante();
+		estudiante.setId(resultSet.getInt(1));
+		estudiante.setNombre(resultSet.getString(2));
+		estudiante.setApellido(resultSet.getString(3));
+		estudiante.setPadron(resultSet.getString(4));
+		return estudiante;
+	}
 	
 	
 }

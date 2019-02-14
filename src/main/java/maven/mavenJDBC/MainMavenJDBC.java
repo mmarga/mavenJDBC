@@ -58,10 +58,10 @@ public class MainMavenJDBC {
 		
 		materiaDao.borrar(2);
 	*/
-	/*	CarreraDao carreraDao = new CarreraDao(connectionManager);
+		CarreraDao carreraDao = new CarreraDao(connectionManager);
 		Carrera carrera = new Carrera(1 , "Abogacía");
-		carreraDao.grabar(carrera);
-	*/	
+		System.out.println(carreraDao.obtenerTodos());
+		
 	/*	Materia materia = new Materia(3, "Estadística", 10);
 		MateriaDao materiaDao = new MateriaDao(connectionManager);
 		materiaDao.grabar(materia);		
