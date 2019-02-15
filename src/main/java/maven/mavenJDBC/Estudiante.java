@@ -36,6 +36,13 @@ public class Estudiante extends Entidad {
 		this.apellido = apellido;
 		this.padron = padron;
 	}
+	@Override
+	public String toString() {
+		return "\nEstudiante [nombre=" + nombre + ", apellido=" + apellido + ", padron=" + padron + "]";
+	}
+	
+	
+	
 	/* CONSTRUCTOR CON GRABACÍON AUTOMATICA EN BD
 	public Estudiante(String nombre, String apellido, String padron, int id) {
 		

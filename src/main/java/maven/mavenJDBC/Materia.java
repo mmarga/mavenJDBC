@@ -28,5 +28,10 @@ public class Materia extends Entidad {
 		this.nombre = nombre;
 		this.cargaHoraria = cargaHoraria;
 	}
+	@Override
+	public String toString() {
+		return "\nMateria [nombre=" + nombre + ", cargaHoraria=" + cargaHoraria + "]";
+	}
+	
 	
 }

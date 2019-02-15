@@ -6,7 +6,7 @@ public class MainMavenJDBC {
 
 	public static void main(String[] args) throws SQLException {
 		ConnectionManager connectionManager = new ConnectionManager();
-		EstudianteDao estudianteDao = new EstudianteDao(connectionManager);
+		//EstudianteDao estudianteDao = new EstudianteDao(connectionManager);
 		//System.out.println(estudianteDao.select()); 
 		/*
 		Estudiante estudiante = new Estudiante();
@@ -58,18 +58,26 @@ public class MainMavenJDBC {
 		
 		materiaDao.borrar(2);
 	*/
-		CarreraDao carreraDao = new CarreraDao(connectionManager);
+	/*	CarreraDao carreraDao = new CarreraDao(connectionManager);
 		Carrera carrera = new Carrera(1 , "Abogacía");
 		System.out.println(carreraDao.obtenerTodos());
-		
-	/*	Materia materia = new Materia(3, "Estadística", 10);
+	*/	
+	/*	Materia materia = new Materia(3, "Lengua y literatura", 32);
 		MateriaDao materiaDao = new MateriaDao(connectionManager);
-		materiaDao.grabar(materia);		
-	*/
+		//materiaDao.grabar(materia);		
+		System.out.println(materiaDao.obtenerPorId(1));
+	
+	*/	
 		
-		Estudiante estudiante = new Estudiante("Juan", "Carlos", "Rey de España");
-		EstudianteDao estudianteDao2 = new EstudianteDao(connectionManager);
-		estudianteDao.grabar(estudiante); 
+		EstudianteDao estudianteDao = new EstudianteDao(connectionManager);
+		System.out.println(estudianteDao.obtenerPorId(1));
+
+		
+		
+		
 	}
+	
+
+		
 
 }

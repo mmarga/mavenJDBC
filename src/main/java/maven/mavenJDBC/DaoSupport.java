@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.temporal.UnsupportedTemporalTypeException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 	//delega las partes que diferencian una clase de otra
 	
 	protected abstract String sqlInsert(T entidad);
+	protected abstract String sqlUdate(T entidad); //reemplazarlos luego por un metodo que me devuelva las columnas 
 	protected abstract Map<Integer, Object> getParameters(T entidad);
 	protected abstract String tableName();
 	protected abstract T createEntity(ResultSet resultSet) throws SQLException;
@@ -49,12 +51,26 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 	}
 
 	public void actualizar(T entidad) throws SQLException {
-		// TODO Auto-generated method stub
+		String sql = sqlUdate(entidad);
+		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
+		getParameters(entidad).forEach((Integer position , Object value) -> {
+			try {
+			statement.setObject(position, value);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		   }
+		});
+		statement.setInt(getParameters(entidad).size()+1, entidad.getId());
+		statement.executeUpdate();
+		
 		
 	}
 
 	public void borrar(Integer id) throws SQLException {
-		// TODO Auto-generated method stub
+		String sql = "delete * from " + tableName() + " where id = ?";
+		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
+		statement.setInt(1, id);
+		statement.executeUpdate();
 		
 	}
 
@@ -72,8 +88,17 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 	}
 
 	public T obtenerPorId(Integer id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from " + tableName() + " where id = ?;";
+		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
+		statement.setInt(1, id);
+		ResultSet resultSet = statement.executeQuery();
+		
+		T entidad = null;
+		if (resultSet.next()) {
+			entidad = createEntity(resultSet);
+		}
+		
+		return entidad;
 	}
 	
 	
