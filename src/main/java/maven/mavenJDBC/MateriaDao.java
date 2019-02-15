@@ -46,6 +46,12 @@ public class MateriaDao extends DaoSupport<Materia>{
 		materia.setCargaHoraria(resultSet.getInt(3));
 		return materia;
 	}
+
+	@Override
+	protected String sqlUdate(Materia entidad) {
+		String sql = "insert into materia set nombre = ? , cargaHoraria = ? where id = ? ";
+		return sql;
+	}
 	
 
 }

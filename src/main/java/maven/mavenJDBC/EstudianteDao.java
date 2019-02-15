@@ -49,6 +49,12 @@ public class EstudianteDao extends DaoSupport<Estudiante> {
 		estudiante.setPadron(resultSet.getString(4));
 		return estudiante;
 	}
+
+	@Override
+	protected String sqlUdate(Estudiante entidad) {
+		String sql = "insert into estudiante nombre = ?, apellido = ?, padron = ? where id = ?";
+		return sql;
+	}
 	
 	
 }

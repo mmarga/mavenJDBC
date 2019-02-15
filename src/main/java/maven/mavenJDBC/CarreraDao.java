@@ -39,6 +39,12 @@ public class CarreraDao extends DaoSupport<Carrera > {
 		return carrera;
 	}
 
+	@Override
+	protected String sqlUdate(Carrera entidad) {
+		String sql = "update carrera set nombre = ? where id = ?";
+		return sql;
+	}
+
 	
 
 

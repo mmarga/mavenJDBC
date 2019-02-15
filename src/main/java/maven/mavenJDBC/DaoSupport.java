@@ -33,13 +33,7 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 	public T grabar(T entidad) throws SQLException {
 		String sql = sqlInsert(entidad);
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-		getParameters(entidad).forEach((Integer position , Object value) -> {
-			try {
-			statement.setObject(position, value);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		   }
-		});
+		setParameters(entidad, statement);
 		statement.executeUpdate();
 		
 		//Busco el ID generado
@@ -53,6 +47,14 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 	public void actualizar(T entidad) throws SQLException {
 		String sql = sqlUdate(entidad);
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
+		setParameters(entidad, statement);
+		statement.setInt(getParameters(entidad).size()+1, entidad.getId());
+		statement.executeUpdate();
+		
+		
+	}
+
+	private void setParameters(T entidad, PreparedStatement statement) {
 		getParameters(entidad).forEach((Integer position , Object value) -> {
 			try {
 			statement.setObject(position, value);
@@ -60,10 +62,6 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 			e.printStackTrace();
 		   }
 		});
-		statement.setInt(getParameters(entidad).size()+1, entidad.getId());
-		statement.executeUpdate();
-		
-		
 	}
 
 	public void borrar(Integer id) throws SQLException {
