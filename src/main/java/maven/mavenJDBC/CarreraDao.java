@@ -26,8 +26,7 @@ public class CarreraDao extends DaoSupport<Carrera > {
 	}
 
 	@Override
-	protected String tableName() {
-		
+	protected String tableName() {		
 		return "carrera";
 	}
 
@@ -44,8 +43,4 @@ public class CarreraDao extends DaoSupport<Carrera > {
 		String sql = "update carrera set nombre = ? where id = ?";
 		return sql;
 	}
-
-	
-
-
 }

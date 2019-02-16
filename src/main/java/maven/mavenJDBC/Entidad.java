@@ -11,6 +11,4 @@ public class Entidad {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-
 }

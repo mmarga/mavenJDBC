@@ -2,15 +2,13 @@ package maven.mavenJDBC;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.temporal.UnsupportedTemporalTypeException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.naming.spi.DirStateFactory.Result;
-import javax.swing.text.Position;
+import java.util.Set;
 
 public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 	
@@ -19,6 +17,7 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 	public DaoSupport(ConnectionManager connectionManager) {
 		this.connectionManager = connectionManager;
 	}
+	
 	//las subclases se encargarán solo de definir los siguientes dos métodos;
 	//delega las partes que diferencian una clase de otra
 	
@@ -27,9 +26,10 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 	protected abstract Map<Integer, Object> getParameters(T entidad);
 	protected abstract String tableName();
 	protected abstract T createEntity(ResultSet resultSet) throws SQLException;
-	// el metodo de la superClases realiza la operación con los valores abstractos que se definirarn
-	//en la aplicación de cada Dao particular
-	//lo común está en una super clase
+	
+	// el metodo de la superClases realiza la operación con los valores abstractos que se definiran en cada Dao
+	//Lo común está en una super clase
+	
 	public T grabar(T entidad) throws SQLException {
 		String sql = sqlInsert(entidad);
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -49,9 +49,7 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
 		setParameters(entidad, statement);
 		statement.setInt(getParameters(entidad).size()+1, entidad.getId());
-		statement.executeUpdate();
-		
-		
+		statement.executeUpdate();		
 	}
 
 	private void setParameters(T entidad, PreparedStatement statement) {
@@ -68,8 +66,7 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 		String sql = "delete * from " + tableName() + " where id = ?";
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
 		statement.setInt(1, id);
-		statement.executeUpdate();
-		
+		statement.executeUpdate();		
 	}
 
 	public List<T> obtenerTodos() throws SQLException {
@@ -78,8 +75,7 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 		ResultSet resultSet = statement.executeQuery(sql);
 		List<T> entidades = new ArrayList<>();
 		while (resultSet.next()) {
-			entidades.add(createEntity(resultSet));
-			
+			entidades.add(createEntity(resultSet));			
 		}
 			
 		return entidades;
@@ -94,11 +90,7 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 		T entidad = null;
 		if (resultSet.next()) {
 			entidad = createEntity(resultSet);
-		}
-		
+		}		
 		return entidad;
 	}
-	
-	
-
 }

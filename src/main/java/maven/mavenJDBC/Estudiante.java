@@ -25,11 +25,10 @@ public class Estudiante extends Entidad {
 	public void setPadron(String padron) {
 		this.padron = padron;
 	}
-	
-	
-	public Estudiante() {
 		
+	public Estudiante() {		
 	}
+	
 	public Estudiante(String nombre, String apellido, String padron) {
 		super();
 		this.nombre = nombre;
@@ -39,30 +38,5 @@ public class Estudiante extends Entidad {
 	@Override
 	public String toString() {
 		return "\nEstudiante [nombre=" + nombre + ", apellido=" + apellido + ", padron=" + padron + "]";
-	}
-	
-	
-	
-	/* CONSTRUCTOR CON GRABACÍON AUTOMATICA EN BD
-	public Estudiante(String nombre, String apellido, String padron, int id) {
-		
-		Estudiante estudiante = new Estudiante();
-		estudiante.setNombre(nombre);
-		estudiante.setApellido(apellido);
-		estudiante.setPadron(padron);
-		EstudianteDao2 estudianteDao2 = new EstudianteDao2();
-		try {
-			
-			estudianteDao2.grabar(estudiante);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		
-	}
-	*/
-	
-
-	
+	}	
 }

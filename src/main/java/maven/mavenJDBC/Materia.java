@@ -3,8 +3,7 @@ package maven.mavenJDBC;
 public class Materia extends Entidad {
 
 	private String nombre;
-	private int cargaHoraria;
-	
+	private int cargaHoraria;	
 	
 	public String getNombre() {
 		return nombre;
@@ -28,10 +27,9 @@ public class Materia extends Entidad {
 		this.nombre = nombre;
 		this.cargaHoraria = cargaHoraria;
 	}
+	
 	@Override
 	public String toString() {
 		return "\nMateria [nombre=" + nombre + ", cargaHoraria=" + cargaHoraria + "]";
-	}
-	
-	
+	}	
 }

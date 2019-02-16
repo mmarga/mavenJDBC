@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.ws.Endpoint;
-
-
 public class EstudianteDao extends DaoSupport<Estudiante> {
 
 	public EstudianteDao(ConnectionManager connectionManager) {
@@ -24,7 +21,7 @@ public class EstudianteDao extends DaoSupport<Estudiante> {
 	protected String sqlInsert(Estudiante entidad) {
 		String sql = "insert into estudiante (nombre, apellido, padron) values (? , ? , ?)";
 		return sql;
-	}
+	}	
 
 	@Override
 	protected Map<Integer, Object> getParameters(Estudiante entidad) {
@@ -54,8 +51,7 @@ public class EstudianteDao extends DaoSupport<Estudiante> {
 	protected String sqlUdate(Estudiante entidad) {
 		String sql = "insert into estudiante nombre = ?, apellido = ?, padron = ? where id = ?";
 		return sql;
-	}
-	
+	}	
 	
 }
 

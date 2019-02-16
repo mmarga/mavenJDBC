@@ -1,5 +1,6 @@
 package maven.mavenJDBC;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MainMavenJDBC {
@@ -72,6 +73,7 @@ public class MainMavenJDBC {
 		EstudianteDao estudianteDao = new EstudianteDao(connectionManager);
 		System.out.println(estudianteDao.obtenerPorId(1));
 
+		estudianteDao.pruebaNombresColumnas();
 		
 		
 		

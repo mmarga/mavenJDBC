@@ -14,8 +14,7 @@ import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 public class MateriaDao extends DaoSupport<Materia>{
 
 	public MateriaDao(ConnectionManager connectionManager) {
-		super(connectionManager);
-		
+		super(connectionManager);		
 	}
 
 	@Override
@@ -33,8 +32,7 @@ public class MateriaDao extends DaoSupport<Materia>{
 	}
 
 	@Override
-	protected String tableName() {
-		
+	protected String tableName() {		
 		return "materia";
 	}
 
@@ -52,6 +50,4 @@ public class MateriaDao extends DaoSupport<Materia>{
 		String sql = "insert into materia set nombre = ? , cargaHoraria = ? where id = ? ";
 		return sql;
 	}
-	
-
 }
