@@ -17,12 +17,6 @@ public class EstudianteDao extends DaoSupport<Estudiante> {
 		super(connectionManager);
 	}
 
-	/*@Override
-	protected String sqlInsert(Estudiante entidad) {
-		String sql = "insert into estudiante (nombre, apellido, padron) values (? , ? , ?)";
-		return sql;
-	}	
-*/
 	@Override
 	protected Map<Integer, Object> getParameters(Estudiante entidad) {
 		Map<Integer, Object> parameters = new HashMap<>();
@@ -46,12 +40,5 @@ public class EstudianteDao extends DaoSupport<Estudiante> {
 		estudiante.setPadron(resultSet.getString(4));
 		return estudiante;
 	}
-
-	@Override
-	protected String sqlUdate(Estudiante entidad) {
-		String sql = "insert into estudiante nombre = ?, apellido = ?, padron = ? where id = ?";
-		return sql;
-	}	
-	
 }
 

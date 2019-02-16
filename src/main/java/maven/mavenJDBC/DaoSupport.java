@@ -22,7 +22,7 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 	//delega las partes que diferencian una clase de otra
 	
 	//protected abstract String sqlInsert(T entidad);
-	protected abstract String sqlUdate(T entidad); //reemplazarlos luego por un metodo que me devuelva las columnas 
+	//protected abstract String sqlUdate(T entidad); //reemplazarlos luego por un metodo que me devuelva las columnas 
 	protected abstract Map<Integer, Object> getParameters(T entidad);
 	protected abstract String tableName();
 	protected abstract T createEntity(ResultSet resultSet) throws SQLException;
@@ -90,10 +90,29 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 		 		 
 		return sb.toString();		
 	}
+	
+	protected String creatingSqlUpdate(T entidad) throws SQLException {
+		//"update carrera set nombre = ? where id = ?";
+		StringBuilder sb = new StringBuilder();
+		sb.append("update " + tableName() + " ");
+		sb.append("set ");
+		
+		for (int i = 0; i < nombresColumnas().size(); i++) {
+			sb.append(nombresColumnas().get(i));
+			sb.append(" = ?,");
+			sb.append(" ");
+		}
+		 sb.deleteCharAt(sb.length()-2);
+		 sb.append(" where id = ?");
+	
+		 		 
+		return sb.toString();		
+	}
+	
 	//////////    FIN CODIGO NUEVO ///////////////////////	
 	
 	public void actualizar(T entidad) throws SQLException {
-		String sql = sqlUdate(entidad);
+		String sql = creatingSqlUpdate(entidad);
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
 		setParameters(entidad, statement);
 		statement.setInt(getParameters(entidad).size()+1, entidad.getId());

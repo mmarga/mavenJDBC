@@ -46,9 +46,9 @@ public class MateriaDao extends DaoSupport<Materia>{
 		return materia;
 	}
 
-	@Override
+	/*/@Override
 	protected String sqlUdate(Materia entidad) {
 		String sql = "insert into materia set nombre = ? , cargaHoraria = ? where id = ? ";
 		return sql;
-	}
+	}*/
 }
