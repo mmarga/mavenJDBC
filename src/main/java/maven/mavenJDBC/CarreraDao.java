@@ -12,12 +12,12 @@ public class CarreraDao extends DaoSupport<Carrera > {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override //Devuelve el String para pasarle al metodo de la superClase que procesa el algoritmo
+	/*@Override //Devuelve el String para pasarle al metodo de la superClase que procesa el algoritmo
 	protected String sqlInsert(Carrera entidad) {
 		String sql = "insert into carrera (nombre) values (?)";
 		return sql;
 	}
-
+*/
 	@Override
 	protected Map<Integer, Object> getParameters(Carrera entidad) {
 		Map<Integer, Object> parameters = new HashMap<>();

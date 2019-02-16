@@ -17,12 +17,13 @@ public class MateriaDao extends DaoSupport<Materia>{
 		super(connectionManager);		
 	}
 
-	@Override
+	/*@Override
 	protected String sqlInsert(Materia entidad) {
 		String sql = "insert into materia (nombre, cargaHoraria) values ( ?, ?) ";
 		return sql;
 	}
-
+*/
+	
 	@Override
 	protected Map<Integer, Object> getParameters(Materia entidad) {
 		Map<Integer, Object> parameters = new HashMap<>();

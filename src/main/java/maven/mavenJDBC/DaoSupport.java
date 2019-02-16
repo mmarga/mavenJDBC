@@ -21,7 +21,7 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 	//las subclases se encargarán solo de definir los siguientes dos métodos;
 	//delega las partes que diferencian una clase de otra
 	
-	protected abstract String sqlInsert(T entidad);
+	//protected abstract String sqlInsert(T entidad);
 	protected abstract String sqlUdate(T entidad); //reemplazarlos luego por un metodo que me devuelva las columnas 
 	protected abstract Map<Integer, Object> getParameters(T entidad);
 	protected abstract String tableName();
@@ -29,9 +29,10 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 	
 	// el metodo de la superClases realiza la operación con los valores abstractos que se definiran en cada Dao
 	//Lo común está en una super clase
+		
 	
 	public T grabar(T entidad) throws SQLException {
-		String sql = sqlInsert(entidad);
+		String sql = creatingSqlInsert(entidad);
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		setParameters(entidad, statement);
 		statement.executeUpdate();
@@ -44,6 +45,53 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 				return entidad;
 	}
 
+	////////// CODIGO GENERAL PARA LOS INSERT DE TODOS LOS DAO //////////
+	
+	public List<String> nombresColumnas() throws SQLException {
+		
+	String sql = "select * from " + tableName();
+	PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
+	ResultSet rs = statement.executeQuery(sql);
+	ResultSetMetaData rsmd = rs.getMetaData();
+	Integer columnCount = rsmd.getColumnCount();
+	List<String> columnNames = new ArrayList<>();
+	
+	for (int i = 2; i <= columnCount; i++ ) {
+	  String name = rsmd.getColumnName(i);
+	  columnNames.add(name);	  
+	}		
+	return columnNames;	
+	}
+	
+	public String recorrerList() throws SQLException {
+				
+		return nombresColumnas().get(0);
+	}
+	
+	protected String creatingSqlInsert(T entidad) throws SQLException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("insert into " + tableName() + " ");
+		sb.append("(");
+		
+		for (int i = 0; i < nombresColumnas().size(); i++) {
+			sb.append(nombresColumnas().get(i));
+			sb.append(",");
+		}
+		 sb.deleteCharAt(sb.length()-1);
+		 sb.append(")");
+		 sb.append(" values (" );
+		 
+		for (int i = 0; i < nombresColumnas().size(); i++) {
+			sb.append("?");
+			sb.append(",");
+		} 
+		sb.deleteCharAt(sb.length()-1);
+		sb.append(")");
+		 		 
+		return sb.toString();		
+	}
+	//////////    FIN CODIGO NUEVO ///////////////////////	
+	
 	public void actualizar(T entidad) throws SQLException {
 		String sql = sqlUdate(entidad);
 		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);

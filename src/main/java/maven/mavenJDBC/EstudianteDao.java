@@ -17,12 +17,12 @@ public class EstudianteDao extends DaoSupport<Estudiante> {
 		super(connectionManager);
 	}
 
-	@Override
+	/*@Override
 	protected String sqlInsert(Estudiante entidad) {
 		String sql = "insert into estudiante (nombre, apellido, padron) values (? , ? , ?)";
 		return sql;
 	}	
-
+*/
 	@Override
 	protected Map<Integer, Object> getParameters(Estudiante entidad) {
 		Map<Integer, Object> parameters = new HashMap<>();
