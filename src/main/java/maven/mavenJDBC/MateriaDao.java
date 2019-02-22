@@ -16,13 +16,6 @@ public class MateriaDao extends DaoSupport<Materia>{
 	public MateriaDao(ConnectionManager connectionManager) {
 		super(connectionManager);		
 	}
-
-	/*@Override
-	protected String sqlInsert(Materia entidad) {
-		String sql = "insert into materia (nombre, cargaHoraria) values ( ?, ?) ";
-		return sql;
-	}
-*/
 	
 	@Override
 	protected Map<Integer, Object> getParameters(Materia entidad) {
@@ -45,10 +38,5 @@ public class MateriaDao extends DaoSupport<Materia>{
 		materia.setCargaHoraria(resultSet.getInt(3));
 		return materia;
 	}
-
-	/*/@Override
-	protected String sqlUdate(Materia entidad) {
-		String sql = "insert into materia set nombre = ? , cargaHoraria = ? where id = ? ";
-		return sql;
-	}*/
+	
 }

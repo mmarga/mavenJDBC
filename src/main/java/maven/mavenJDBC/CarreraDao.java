@@ -10,7 +10,6 @@ public class CarreraDao extends DaoSupport<Carrera > {
 	public CarreraDao(ConnectionManager connectionManager) {
 		super(connectionManager);
 	}
-
 	
 	@Override
 	protected Map<Integer, Object> getParameters(Carrera entidad) {
