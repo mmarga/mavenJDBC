@@ -193,5 +193,4 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 		return entidad;
 	}
 	
-	
 }
