@@ -45,22 +45,35 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 				return entidad;
 	}
 
+	
+	public T grabar2(T entidad) throws SQLException {
+		String sql = creatingSqlInsertGeneral(entidad);
+		PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		setParameters(entidad, statement);
+		statement.executeUpdate();
+		
+		//Busco el ID generado
+		ResultSet generatedKeys = statement.getGeneratedKeys();
+		if (generatedKeys.next()) {
+			entidad.setId(generatedKeys.getInt(1));			
+		}		
+				return entidad;
+	}
 	////////// CODIGO GENERAL PARA LOS INSERT DE TODOS LOS DAO //////////
 	
 	public List<String> nombresColumnas() throws SQLException {
-		
-	String sql = "select * from " + tableName();
-	PreparedStatement statement = connectionManager.conectarse().prepareStatement(sql);
-	ResultSet rs = statement.executeQuery(sql);
-	ResultSetMetaData rsmd = rs.getMetaData();
-	Integer columnCount = rsmd.getColumnCount();
-	List<String> columnNames = new ArrayList<>();
-	
-	for (int i = 2; i <= columnCount; i++ ) {
-	  String name = rsmd.getColumnName(i);
-	  columnNames.add(name);	  
-	}		
-	return columnNames;	
+	//TRAYENDO METADATA DIRECTO DESDE LA BD			
+	String sql = "select column_name from information_schema.columns where table_schema ='universidaddb' and table_name = '" + tableName() +  "' order by ordinal_position"; 
+	Statement statement = connectionManager.conectarse().createStatement();
+	ResultSet resultSet = statement.executeQuery(sql);
+	List<String> columnas = new ArrayList<>();
+	while (resultSet.next()) {
+		String columnName = resultSet.getString(1);
+		if (!columnName.equals("id")) {
+			columnas.add(columnName);	
+		}					
+	}
+	return columnas;		
 	}
 	
 	public String recorrerList() throws SQLException {
@@ -103,11 +116,30 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 			sb.append(" ");
 		}
 		 sb.deleteCharAt(sb.length()-2);
-		 sb.append(" where id = ?");
-	
+		 sb.append(" where id = ?");	
 		 		 
 		return sb.toString();		
 	}
+	
+	//////// SQL INSERT GENERICO ///////////
+	
+	
+	
+	protected String creatingSqlInsertGeneral(T entidad) throws SQLException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("insert into " + tableName());	
+		 sb.append(" values (null," );
+		 
+		for (int i = 0; i < nombresColumnas().size(); i++) {
+			sb.append("?");
+			sb.append(",");
+		} 
+		sb.deleteCharAt(sb.length()-1);
+		sb.append(")");
+
+		return sb.toString();		
+	}
+	
 	
 	//////////    FIN CODIGO NUEVO ///////////////////////	
 	
@@ -160,4 +192,6 @@ public abstract class DaoSupport<T extends Entidad> implements Dao<T> {
 		}		
 		return entidad;
 	}
+	
+	
 }

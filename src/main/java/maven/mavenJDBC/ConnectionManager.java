@@ -10,7 +10,7 @@ public class ConnectionManager {
 	
 	public Connection conectarse() throws SQLException {
 		if (connection == null || connection.isClosed() || connection.isValid(10000)) { 
-			connection =  DriverManager.getConnection("jdbc:mysql://localhost:3306/mavenjdbc", "root", "");
+			connection =  DriverManager.getConnection("jdbc:mysql://localhost:3306/universidaddb", "root", "");
 		}		
 		return connection;
 	}	

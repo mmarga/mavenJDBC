@@ -21,16 +21,19 @@ public class MainMavenJDBC {
 		carrera.setNombre("Administración");
 		carrera.setId(5);
 		CarreraDao carreraDao = new CarreraDao(connectionManager);
-		carreraDao.actualizar(carrera);
+		System.out.println(carreraDao.creatingSqlInsert(carrera));
+		System.out.println(carreraDao.creatingSqlUpdate(carrera));
+		//carreraDao.grabar(carrera);
 		
+		Estudiante estudiante = new Estudiante("carlos", "Pelegrini", "presidente");
+		EstudianteDao estudianteDao = new EstudianteDao(connectionManager);
+		System.out.println(estudianteDao.creatingSqlInsert(estudiante));
+		System.out.println(estudianteDao.creatingSqlUpdate(estudiante));
+		//estudianteDao.grabar(estudiante);
+		estudianteDao.creatingSqlInsertGeneral(estudiante);
+		Estudiante estudiante2 = new Estudiante("Ricardito", "Alfonsín", "Hijo del otro");
+		estudianteDao.grabar(estudiante2);
 		
-		
-		
-
-		
-	}
-	
-
-		
+	}	
 
 }
